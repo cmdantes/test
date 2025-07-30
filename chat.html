@@ -53,7 +53,85 @@
 			}
 		);
 	};
-
+	function displayChat(id){
+	embedded_svc.liveAgentAPI.startChat({
+		directToAgentRouting: {
+			buttonId: id,//"573xx0000000000",
+			// userId: ??,
+			fallback: true
+		},
+		prepopulatedPrechatFields:{
+		    FirstName: "Brian",
+		    LastName: "Barringer",
+		    Email: "d.barringer413@gmail.com",
+		    Subject: "Hello"
+		},
+		extraPrechatInfo: [{
+			    "entityName":"Contact",
+			    "showOnCreate":true,
+			    "linkToEntityName":"Case",
+			    "linkToEntityField":"ContactId",
+			    "saveToTranscript":"ContactId",
+			    "entityFieldMaps": [{
+				        "isExactMatch":true,
+				        "fieldName":"FirstName",
+				        "doCreate":false,
+				        "doFind":true,
+				        "label":"First Name"
+			    	}, {
+				        "isExactMatch":true,
+				        "fieldName":"LastName",
+				        "doCreate":false,
+				        "doFind":true,
+				        "label":"Last Name"
+				    }, {
+				        "isExactMatch":true,
+				        "fieldName":"Email",
+				        "doCreate":false,
+				        "doFind":true,
+				        "label":"Email"
+			    	}]
+				}, 
+				{
+			    "entityName":"Case",
+			    "showOnCreate":true,
+			    "saveToTranscript":"CaseId",
+			    "entityFieldMaps": [{
+			        "isExactMatch":false,
+			        "fieldName":"Subject",
+			        "doCreate":false,
+			        "doFind":true,
+			        "label":"issue"
+			      }, {
+			        "isExactMatch":false,
+			        "fieldName":"Status",
+			        "doCreate":false,
+			        "doFind":true,
+			        "label":"Status"
+			      }, {
+			        "isExactMatch":false,
+			        "fieldName":"Origin",
+			        "doCreate":false,
+			        "doFind":true,
+			        "label":"Origin"
+			    }]
+			}],
+			extraPrechatFormDetails: [{
+			    "label":"First Name",
+			    "name":"FirstName",
+			    "value":firstName,
+			    "displayToAgent":true
+			}, {
+			    "label":"Last Name",
+			    "value":lastName,
+			    "displayToAgent":true
+			}, {
+			    "label":"Email",
+			    "value":email,
+			    "displayToAgent":true
+			}]
+	});
+}
 	if (!window.embedded_svc) {
 		var s = document.createElement('script');
 		s.setAttribute('src', 'https://control4.my.salesforce.com/embeddedservice/5.0/esw.min.js');
